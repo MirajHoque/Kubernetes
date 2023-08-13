@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-web-hello #name of the deployment
+spec:
+  selector: #used to match label scheme. specify which pod will be manage by this deployment. 
+    matchLabels:
+      app: k8s-web-hello #label
+  template: #describe pod
+    metadata:
+      labels:
+        app: k8s-web-hello #label
+    spec: #specify which container to create in this pod
+      containers:
+      - name: k8s-web-hello
+        image: miraj32444/k8s-web-hello
+        resources:
+          limits: #specify memory and cpu limit for each pod
+            memory: "128Mi"
+            cpu: "500m" #half of the cpu core(250 1/4 cpu core)
+        ports: #spcify which port will be open for specific container
+        - containerPort: 3000 #list of the container port which will be open in pods ip address
