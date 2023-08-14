@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: k8s-web-hello #name of the deployment
 spec:
+  replicas: 3
   selector: #used to match label scheme. specify which pod will be manage by this deployment. 
     matchLabels:
       app: k8s-web-hello #label
