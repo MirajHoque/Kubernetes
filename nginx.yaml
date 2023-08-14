@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx #name for service
+spec:
+  selector:
+    app: nginx
+  ports:
+  - port: 80 #port want to utilize as external port for deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx #name of the deployment
+spec:
+  replicas: 5
+  selector: #used to match label scheme. specify which pod will be manage by this deployment. 
+    matchLabels:
+      app: nginx #label
+  template: #describe pod
+    metadata:
+      labels:
+        app: nginx #label
+    spec: #specify which container to create in this pod
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+          limits: #specify memory and cpu limit for each pod
+            memory: "128Mi"
+            cpu: "500m" #half of the cpu core(250 1/4 cpu core)
+        ports: #spcify which port will be open for specific container
+        - containerPort: 80 #list of the container port which will be open in pods ip address
